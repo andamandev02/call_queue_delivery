@@ -97,6 +97,13 @@ class _HomeScreenState extends State<HomeScreen> {
         MaterialPageRoute(builder: (context) => const SettingMainScreen()),
       );
       _handleInvalidCharacter();
+    } else if (value.contains == '/') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (isFieldEnabled) {
+          focusNode.requestFocus();
+          controller.clear();
+        }
+      });
     } else if (value.startsWith("1") ||
         value.startsWith("2") ||
         value.startsWith("3") ||
@@ -225,41 +232,41 @@ class _HomeScreenState extends State<HomeScreen> {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("1.png")).toList();
           await audioPlayer.play(AssetSource('title/เชิญorder.mp3'));
-          await Future.delayed(const Duration(milliseconds: 1200));
+          // await Future.delayed(const Duration(milliseconds: 1200));
           await playNumberSound(afterPlus);
         } else if (beforePlus == '2') {
           // grab
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("2.png")).toList();
           await audioPlayer.play(AssetSource('title/grabฟู้ดorder.mp3'));
-          await Future.delayed(const Duration(milliseconds: 1200));
+          // await Future.delayed(const Duration(milliseconds: 1200));
           await playNumberSound(afterPlus);
         } else if (beforePlus == '3') {
           // line man
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("3.png")).toList();
           await audioPlayer.play(AssetSource('title/ไลน์แมนorder.mp3'));
-          await Future.delayed(const Duration(milliseconds: 1200));
+          // await Future.delayed(const Duration(milliseconds: 1200));
           await playNumberSound(afterPlus);
         } else if (beforePlus == '4') {
           // shopee
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("4.png")).toList();
           await audioPlayer.play(AssetSource('title/ชอปปี้ฟู๊ดorder.mp3'));
-          await Future.delayed(const Duration(milliseconds: 1200));
+          // await Future.delayed(const Duration(milliseconds: 1200));
           await playNumberSound(afterPlus);
         } else if (beforePlus == '5') {
           // food
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("5.png")).toList();
           await audioPlayer.play(AssetSource('title/ฟูดแพนด้าorder.mp3'));
-          await Future.delayed(const Duration(milliseconds: 1200));
+          // await Future.delayed(const Duration(milliseconds: 1200));
           await playNumberSound(afterPlus);
         } else {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("1.png")).toList();
           await audioPlayer.play(AssetSource('title/เชิญorder.mp3'));
-          await Future.delayed(const Duration(milliseconds: 1200));
+          // await Future.delayed(const Duration(milliseconds: 1200));
           await playNumberSound(afterPlus);
         }
 
@@ -359,6 +366,13 @@ class _HomeScreenState extends State<HomeScreen> {
         isFieldEnabled = false;
       });
       handlePlus(value);
+    } else if (value.contains == '/') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (isFieldEnabled) {
+          focusNode.requestFocus();
+          controller.clear();
+        }
+      });
     }
   }
 
