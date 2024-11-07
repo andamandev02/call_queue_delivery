@@ -98,12 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
       _handleInvalidCharacter();
     } else if (value.contains == '/') {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (isFieldEnabled) {
-          focusNode.requestFocus();
-          controller.clear();
-        }
-      });
+      _handleMultiply();
     } else if (value.startsWith("1") ||
         value.startsWith("2") ||
         value.startsWith("3") ||
@@ -200,74 +195,70 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         }
 
-        startBlinking();
-
-        // Future<void> playNumberSound(String number) async {
-        //   for (int i = 0; i < number.length; i++) {
-        //     await Future.delayed(const Duration(milliseconds: 400));
-        //     await audioPlayer.play(AssetSource('th/${number[i]}.mp3'));
-        //     if (i + 1 < number.length && number[i] == number[i + 1]) {
-        //       await audioPlayer.onPlayerStateChanged.firstWhere(
-        //         (state) => state == PlayerState.completed,
-        //         orElse: () => PlayerState.completed,
-        //       );
-        //     } else {
-        //       await Future.delayed(const Duration(milliseconds: 400));
-        //     }
-        //   }
-        // }
-
-        Future<void> playNumberSound(String number) async {
-          for (int i = 0; i < number.length; i++) {
-            await audioPlayer.play(AssetSource('th/${number[i]}.mp3'));
-
-            // รอให้เสียงปัจจุบันเล่นเสร็จ
-            await audioPlayer.onPlayerStateChanged.firstWhere(
-              (state) => state == PlayerState.completed,
-            );
-          }
-        }
-
         if (beforePlus == '1') {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("1.png")).toList();
-          await audioPlayer.play(AssetSource('title/เชิญorder.mp3'));
-          // await Future.delayed(const Duration(milliseconds: 1200));
-          await playNumberSound(afterPlus);
+          runZoned(() async {
+            await audioPlayer.play(AssetSource('title/order.mp3'));
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playNumberSound(afterPlus);
+          }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '2') {
           // grab
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("2.png")).toList();
-          await audioPlayer.play(AssetSource('title/grabฟู้ดorder.mp3'));
-          // await Future.delayed(const Duration(milliseconds: 1200));
-          await playNumberSound(afterPlus);
+          runZoned(() async {
+            await audioPlayer.play(AssetSource('title/grab.mp3'));
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playNumberSound(afterPlus);
+          }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '3') {
           // line man
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("3.png")).toList();
-          await audioPlayer.play(AssetSource('title/ไลน์แมนorder.mp3'));
-          // await Future.delayed(const Duration(milliseconds: 1200));
-          await playNumberSound(afterPlus);
+          runZoned(() async {
+            await audioPlayer.play(AssetSource('title/line.mp3'));
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playNumberSound(afterPlus);
+          }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '4') {
           // shopee
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("4.png")).toList();
-          await audioPlayer.play(AssetSource('title/ชอปปี้ฟู๊ดorder.mp3'));
-          // await Future.delayed(const Duration(milliseconds: 1200));
-          await playNumberSound(afterPlus);
+          runZoned(() async {
+            await audioPlayer.play(AssetSource('title/shop.mp3'));
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playNumberSound(afterPlus);
+          }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '5') {
           // food
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("5.png")).toList();
-          await audioPlayer.play(AssetSource('title/ฟูดแพนด้าorder.mp3'));
-          // await Future.delayed(const Duration(milliseconds: 1200));
-          await playNumberSound(afterPlus);
+          runZoned(() async {
+            await audioPlayer.play(AssetSource('title/food.mp3'));
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playNumberSound(afterPlus);
+          }, zoneSpecification: ZoneSpecification());
         } else {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("1.png")).toList();
-          await audioPlayer.play(AssetSource('title/เชิญorder.mp3'));
-          // await Future.delayed(const Duration(milliseconds: 1200));
-          await playNumberSound(afterPlus);
+          runZoned(() async {
+            await audioPlayer.play(AssetSource('title/order.mp3'));
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playNumberSound(afterPlus);
+          }, zoneSpecification: ZoneSpecification());
         }
 
         setState(() {
@@ -310,6 +301,15 @@ class _HomeScreenState extends State<HomeScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         focusNode.requestFocus();
       });
+    }
+  }
+
+  Future<void> playNumberSound(String number) async {
+    for (int i = 0; i < number.length; i++) {
+      await audioPlayer.play(AssetSource('th/${number[i]}.mp3'));
+      await audioPlayer.onPlayerStateChanged.firstWhere(
+        (state) => state == PlayerState.completed,
+      );
     }
   }
 
@@ -366,13 +366,6 @@ class _HomeScreenState extends State<HomeScreen> {
         isFieldEnabled = false;
       });
       handlePlus(value);
-    } else if (value.contains == '/') {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (isFieldEnabled) {
-          focusNode.requestFocus();
-          controller.clear();
-        }
-      });
     }
   }
 
