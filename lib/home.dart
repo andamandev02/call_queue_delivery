@@ -85,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isPlaying) {
       return;
     }
+    value = value.replaceAll('-', '');
     setState(() {
       isFieldEnabled = false;
     });
@@ -103,9 +104,17 @@ class _HomeScreenState extends State<HomeScreen> {
         value.startsWith("2") ||
         value.startsWith("3") ||
         value.startsWith("4") ||
+        value.startsWith("6") ||
         value.startsWith("5")) {
       int indexOfPlus = value.indexOf("+");
-      if (indexOfPlus > 1) {
+      if (indexOfPlus == -1) {
+        _handleInvalidCharacter();
+        setState(() {
+          isFieldEnabled = true;
+        });
+      } else if (indexOfPlus > 0 && indexOfPlus == value.length - 1) {
+        _handleInvalidCharacter();
+      } else if (indexOfPlus > 1) {
         value = value[0] + value.substring(indexOfPlus);
         _handleNumericValue(value.toString());
       } else {
@@ -195,11 +204,22 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         }
 
+        Future<void> playNumberSound(String number) async {
+          for (int i = 0; i < number.length; i++) {
+            await playAudioFile(p.join(usbPath, 'TH-NEW', '${number[i]}.mp3'));
+            // await audioPlayer.play(AssetSource('th/${number[i]}.mp3'));
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+          }
+        }
+
         if (beforePlus == '1') {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("1.png")).toList();
           runZoned(() async {
-            await audioPlayer.play(AssetSource('title/order.mp3'));
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'order.mp3'));
+            // await audioPlayer.play(AssetSource('title/order.mp3'));
             await audioPlayer.onPlayerStateChanged.firstWhere(
               (state) => state == PlayerState.completed,
             );
@@ -210,7 +230,8 @@ class _HomeScreenState extends State<HomeScreen> {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("2.png")).toList();
           runZoned(() async {
-            await audioPlayer.play(AssetSource('title/grab.mp3'));
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'grab.mp3'));
+            // await audioPlayer.play(AssetSource('title/grab.mp3'));
             await audioPlayer.onPlayerStateChanged.firstWhere(
               (state) => state == PlayerState.completed,
             );
@@ -221,7 +242,8 @@ class _HomeScreenState extends State<HomeScreen> {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("3.png")).toList();
           runZoned(() async {
-            await audioPlayer.play(AssetSource('title/line.mp3'));
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'line.mp3'));
+            // await audioPlayer.play(AssetSource('title/line.mp3'));
             await audioPlayer.onPlayerStateChanged.firstWhere(
               (state) => state == PlayerState.completed,
             );
@@ -232,7 +254,8 @@ class _HomeScreenState extends State<HomeScreen> {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("4.png")).toList();
           runZoned(() async {
-            await audioPlayer.play(AssetSource('title/shop.mp3'));
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'shop.mp3'));
+            // await audioPlayer.play(AssetSource('title/shop.mp3'));
             await audioPlayer.onPlayerStateChanged.firstWhere(
               (state) => state == PlayerState.completed,
             );
@@ -243,7 +266,20 @@ class _HomeScreenState extends State<HomeScreen> {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("5.png")).toList();
           runZoned(() async {
-            await audioPlayer.play(AssetSource('title/food.mp3'));
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'food.mp3'));
+            // await audioPlayer.play(AssetSource('title/food.mp3'));
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playNumberSound(afterPlus);
+          }, zoneSpecification: ZoneSpecification());
+        } else if (beforePlus == '6') {
+          // food
+          filteredLogoList =
+              logoList.where((file) => file.path.endsWith("6.png")).toList();
+          runZoned(() async {
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'robin.mp3'));
+            // await audioPlayer.play(AssetSource('title/food.mp3'));
             await audioPlayer.onPlayerStateChanged.firstWhere(
               (state) => state == PlayerState.completed,
             );
@@ -253,7 +289,8 @@ class _HomeScreenState extends State<HomeScreen> {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("1.png")).toList();
           runZoned(() async {
-            await audioPlayer.play(AssetSource('title/order.mp3'));
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'order.mp3'));
+            // await audioPlayer.play(AssetSource('title/order.mp3'));
             await audioPlayer.onPlayerStateChanged.firstWhere(
               (state) => state == PlayerState.completed,
             );
@@ -304,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> playNumberSound(String number) async {
+  Future<void> playNumberSound1(String number) async {
     for (int i = 0; i < number.length; i++) {
       await audioPlayer.play(AssetSource('th/${number[i]}.mp3'));
       await audioPlayer.onPlayerStateChanged.firstWhere(
