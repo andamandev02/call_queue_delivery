@@ -100,6 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
       _handleInvalidCharacter();
     } else if (value.contains == '/') {
       _handleMultiply();
+    } else if (RegExp(r'^\d+$').hasMatch(value)) {
+      if (value.length > 4) {
+        value = value.substring(0, 4);
+      }
+      _handleNumericValue(value);
     } else if (value.startsWith("1") ||
         value.startsWith("2") ||
         value.startsWith("3") ||
@@ -144,6 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _handleNumericValue(String value) async {
+    if (RegExp(r'^\d+$').hasMatch(value)) {
+      value = '1+$value';
+    }
     await playSound(value);
   }
 
@@ -207,7 +215,6 @@ class _HomeScreenState extends State<HomeScreen> {
         Future<void> playNumberSound(String number) async {
           for (int i = 0; i < number.length; i++) {
             await playAudioFile(p.join(usbPath, 'TH-NEW', '${number[i]}.mp3'));
-            // await audioPlayer.play(AssetSource('th/${number[i]}.mp3'));
             await audioPlayer.onPlayerStateChanged.firstWhere(
               (state) => state == PlayerState.completed,
             );
@@ -225,10 +232,10 @@ class _HomeScreenState extends State<HomeScreen> {
             );
             await playNumberSound(afterPlus);
           }, zoneSpecification: ZoneSpecification());
-        } else if (beforePlus == '2') {
+        } else if (beforePlus == '4') {
           // grab
           filteredLogoList =
-              logoList.where((file) => file.path.endsWith("2.png")).toList();
+              logoList.where((file) => file.path.endsWith("4.png")).toList();
           runZoned(() async {
             await playAudioFile(p.join(usbPath, 'TITTLE', 'grab.mp3'));
             // await audioPlayer.play(AssetSource('title/grab.mp3'));
@@ -249,10 +256,10 @@ class _HomeScreenState extends State<HomeScreen> {
             );
             await playNumberSound(afterPlus);
           }, zoneSpecification: ZoneSpecification());
-        } else if (beforePlus == '4') {
+        } else if (beforePlus == '5') {
           // shopee
           filteredLogoList =
-              logoList.where((file) => file.path.endsWith("4.png")).toList();
+              logoList.where((file) => file.path.endsWith("5.png")).toList();
           runZoned(() async {
             await playAudioFile(p.join(usbPath, 'TITTLE', 'shop.mp3'));
             // await audioPlayer.play(AssetSource('title/shop.mp3'));
@@ -261,10 +268,10 @@ class _HomeScreenState extends State<HomeScreen> {
             );
             await playNumberSound(afterPlus);
           }, zoneSpecification: ZoneSpecification());
-        } else if (beforePlus == '5') {
+        } else if (beforePlus == '2') {
           // food
           filteredLogoList =
-              logoList.where((file) => file.path.endsWith("5.png")).toList();
+              logoList.where((file) => file.path.endsWith("2.png")).toList();
           runZoned(() async {
             await playAudioFile(p.join(usbPath, 'TITTLE', 'food.mp3'));
             // await audioPlayer.play(AssetSource('title/food.mp3'));
@@ -274,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
             await playNumberSound(afterPlus);
           }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '6') {
-          // food
+          // robin
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("6.png")).toList();
           runZoned(() async {
@@ -399,6 +406,9 @@ class _HomeScreenState extends State<HomeScreen> {
         await playSound(displayNumber);
       }
     } else if (value == '+') {
+      if (isPlaying) {
+        return;
+      }
       setState(() {
         isFieldEnabled = false;
       });

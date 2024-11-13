@@ -16,7 +16,7 @@ class _SettingMainScreenState extends State<SettingMainScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 1, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -34,7 +34,7 @@ class _SettingMainScreenState extends State<SettingMainScreen>
           controller: _tabController,
           tabs: const [
             Tab(text: 'Setting USB (ตั้งค่า USB)'),
-            // Tab(text: 'Setting Sound (ตั้งค่า เสียง)'),
+            Tab(text: 'Setting Sound (ตั้งค่า เสียง)'),
           ],
         ),
       ),
@@ -42,7 +42,7 @@ class _SettingMainScreenState extends State<SettingMainScreen>
         controller: _tabController,
         children: const [
           TabUSBScreen(),
-          // TabSoundScreen(),
+          TabSoundScreen(),
         ],
       ),
     );
