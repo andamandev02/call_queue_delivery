@@ -221,6 +221,9 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         }
 
+        // promtpt = อร่อย
+        // promtpr = รอ
+
         if (beforePlus == '1') {
           filteredLogoList =
               logoList.where((file) => file.path.endsWith("1.png")).toList();
@@ -231,6 +234,10 @@ class _HomeScreenState extends State<HomeScreen> {
               (state) => state == PlayerState.completed,
             );
             await playNumberSound(afterPlus);
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'prompt.mp3'));
           }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '4') {
           // grab
@@ -243,6 +250,10 @@ class _HomeScreenState extends State<HomeScreen> {
               (state) => state == PlayerState.completed,
             );
             await playNumberSound(afterPlus);
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'prompr.mp3'));
           }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '3') {
           // line man
@@ -255,6 +266,10 @@ class _HomeScreenState extends State<HomeScreen> {
               (state) => state == PlayerState.completed,
             );
             await playNumberSound(afterPlus);
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'prompr.mp3'));
           }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '5') {
           // shopee
@@ -267,6 +282,10 @@ class _HomeScreenState extends State<HomeScreen> {
               (state) => state == PlayerState.completed,
             );
             await playNumberSound(afterPlus);
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'prompr.mp3'));
           }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '2') {
           // food
@@ -279,6 +298,10 @@ class _HomeScreenState extends State<HomeScreen> {
               (state) => state == PlayerState.completed,
             );
             await playNumberSound(afterPlus);
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'prompr.mp3'));
           }, zoneSpecification: ZoneSpecification());
         } else if (beforePlus == '6') {
           // robin
@@ -291,6 +314,10 @@ class _HomeScreenState extends State<HomeScreen> {
               (state) => state == PlayerState.completed,
             );
             await playNumberSound(afterPlus);
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'prompr.mp3'));
           }, zoneSpecification: ZoneSpecification());
         } else {
           filteredLogoList =
@@ -302,6 +329,10 @@ class _HomeScreenState extends State<HomeScreen> {
               (state) => state == PlayerState.completed,
             );
             await playNumberSound(afterPlus);
+            await audioPlayer.onPlayerStateChanged.firstWhere(
+              (state) => state == PlayerState.completed,
+            );
+            await playAudioFile(p.join(usbPath, 'TITTLE', 'prompr.mp3'));
           }, zoneSpecification: ZoneSpecification());
         }
 
